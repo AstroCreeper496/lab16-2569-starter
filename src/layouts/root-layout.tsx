@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 
 import { AppSidebar } from "@/components/app-sidebar";
+import { currentStudent } from "@/lib/mock-data";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -12,7 +13,11 @@ import {
 export default function RootLayout() {
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar
+        firstName={"Suthanakit"}
+        lastName={"Wongsrichan"}
+        studentId={"680610729"}
+      />
       <SidebarInset>
         <header className="flex h-14 items-center justify-between gap-2 border-b px-4">
           <div className="flex items-center gap-2">

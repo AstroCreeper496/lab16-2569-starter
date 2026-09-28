@@ -1,4 +1,4 @@
-import { BookOpen, Home } from "lucide-react";
+import { BookOpen, Home , ClipboardList} from "lucide-react";
 import { Link, useLocation } from "react-router";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -18,16 +18,23 @@ import {
 } from "@/components/ui/sidebar";
 
 // ผู้ใช้ตัวอย่างฝั่ง Lecture: ผู้ดูแลระบบ (ADMIN)
-const NICKNAME = "Admin";
-const ROLE = "ADMIN";
 
 const items = [
   { title: "หน้าแรก", url: "/", icon: Home },
-  { title: "จัดการการลงทะเบียน", url: "/admin/enrollments", icon: BookOpen },
+  { title: "จัดการวิชาเรียน", url: "/admin/courses", icon: BookOpen },
+  { title: "จัดการการลงทะเบียน", url: "/admin/enrollments", icon: ClipboardList }
 ];
 
-export function AppSidebar() {
+type AppSidebarProps = {
+  firstName?: string;
+  lastName?: string;
+  studentId?: string;
+};
+
+export function AppSidebar({ firstName, lastName, studentId }: AppSidebarProps) {
   const location = useLocation();
+  const NICKNAME = (firstName) && (lastName)? firstName + ` ` + lastName: "Admin";
+  const ROLE = (studentId)? studentId : "ADMIN";
 
   return (
     <Sidebar>
