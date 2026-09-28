@@ -1,7 +1,7 @@
-import { BookOpen, Home , ClipboardList} from "lucide-react";
+import { BookOpen, ClipboardList, Home } from "lucide-react";
 import { Link, useLocation } from "react-router";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -18,42 +18,45 @@ import {
 } from "@/components/ui/sidebar";
 
 // ผู้ใช้ตัวอย่างฝั่ง Lecture: ผู้ดูแลระบบ (ADMIN)
-
-const items = [
-  { title: "หน้าแรก", url: "/", icon: Home },
-  { title: "จัดการวิชาเรียน", url: "/admin/courses", icon: BookOpen },
-  { title: "จัดการการลงทะเบียน", url: "/admin/enrollments", icon: ClipboardList }
-];
-
 type AppSidebarProps = {
-  firstName?: string;
-  lastName?: string;
-  studentId?: string;
+  firstName: string;
+  lastName: string;
+  studentId: string;
 };
+
+const navigationItems = [
+  { label: "หน้าหลัก", href: "/", icon: Home },
+  { label: "จัดการการลงทะเบียน", href: "/admin/enrollments", icon: ClipboardList },
+  { label: "จัดการรายวิชา", href: "/admin/courses", icon: BookOpen },
+];
 
 export function AppSidebar({ firstName, lastName, studentId }: AppSidebarProps) {
   const location = useLocation();
-  const NICKNAME = (firstName) && (lastName)? firstName + ` ` + lastName: "Admin";
-  const ROLE = (studentId)? studentId : "ADMIN";
 
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarHeader>
-        <div className="px-2 py-1 text-sm font-semibold">CPE & ISNE</div>
+        <div className="flex items-center gap-2 px-2 py-1">
+          <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground">
+            <BookOpen className="size-4" />
+          </div>
+          <span className="truncate text-sm font-semibold">ระบบลงทะเบียนเรียน</span>
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>เมนูหลัก</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+              {navigationItems.map(({ label, href, icon: Icon }) => (
+                <SidebarMenuItem key={href}>
                   <SidebarMenuButton
-                    isActive={location.pathname === item.url}
-                    render={<Link to={item.url} />}
+                    render={<Link to={href} />}
+                    isActive={location.pathname === href}
+                    tooltip={label}
                   >
-                    <item.icon />
-                    <span>{item.title}</span>
+                    <Icon />
+                    <span>{label}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -61,24 +64,22 @@ export function AppSidebar({ firstName, lastName, studentId }: AppSidebarProps) 
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-
       <SidebarFooter>
-        <Separator className="mb-2" />
-        <div className="flex items-center gap-3 px-2 py-1.5">
+        <Separator />
+        <div className="flex items-center gap-2 px-2 py-1">
           <Avatar>
-
-            <AvatarImage src="/profile.svg" alt={NICKNAME} />
-            <AvatarFallback>{NICKNAME.slice(0, 2)}</AvatarFallback>
+            <AvatarFallback>
+              {firstName.charAt(0)}{lastName.charAt(0)}
+            </AvatarFallback>
           </Avatar>
-          <div className="flex min-w-0 flex-col">
-            
-            <span className="truncate text-sm font-medium">{NICKNAME}</span>
-            <Badge variant="outline" className="w-fit text-[10px]">
-              {ROLE}
-            </Badge>
+          <div className="grid min-w-0 flex-1 text-left text-sm leading-tight">
+            <span className="truncate font-medium">{firstName} {lastName}</span>
+            <span className="truncate text-xs text-muted-foreground">{studentId}</span>
           </div>
+          <Badge variant="secondary">ADMIN</Badge>
         </div>
       </SidebarFooter>
     </Sidebar>
   );
 }
+       

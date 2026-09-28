@@ -1,7 +1,6 @@
 import { Outlet } from "react-router";
 
 import { AppSidebar } from "@/components/app-sidebar";
-import { currentStudent } from "@/lib/mock-data";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Separator } from "@/components/ui/separator";
 import {
