@@ -1,9 +1,9 @@
 ## lab16-2569 : Enrollment Card List
 
-ป้อนข้อมูลนักศึกษา
-รหัส นศ.:
+ป้อนข้อมูลนักศึกษา 
+รหัส นศ.: 680610729
 
-ชื่อ-สกุล :
+ชื่อ-สกุล : Suthanakit Wongsrichan
 
 หลังจากการ Fork และ Clone repository แล้ว, ให้เปิดโฟลเดอร์ด้วย VSCode และรันคำสั่งใน terminal:
 
